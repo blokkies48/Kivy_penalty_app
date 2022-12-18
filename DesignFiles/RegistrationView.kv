@@ -1,0 +1,75 @@
+<RegistrationView>
+    Screen:
+        MDCard:
+            radius: [20]
+            size_hint: None,None
+            size: 300,400
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            padding: 15
+            spacing: 15
+            orientation: 'vertical'
+            Image:
+                source: 'DesignFiles\\logo.png'
+            MDLabel:
+                text: "Register User"
+                halign: "center"
+                font_size: 20
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8}   
+            MDTextField:
+                id: reg_user_name
+                hint_text: "User Name"
+                icon_left: "account"
+                multiline: False
+
+            MDScreen:
+
+                MDTextField:
+                    id: reg_user_password
+                    hint_text: 'Password'
+                    password: True
+                    icon_left: "key-variant"
+                    multiline: False
+
+                MDIconButton:
+                    icon: "eye-off"
+                    pos_hint: {'center_x': 0.9, 'center_y': 1.2}
+                    on_release:
+                        self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                        reg_user_password.password = False if reg_user_password.password is True else True
+
+            MDScreen:
+
+                MDTextField:
+                    id: reg_user_password_2
+                    hint_text: 'Password again'
+                    password: True
+                    icon_left: "key-variant"
+                    multiline: False
+
+                MDIconButton:
+                    icon: "eye-off"
+                    pos_hint: {'center_x': 0.9, 'center_y': 1.2}
+                    on_release:
+                        self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                        reg_user_password_2.password = False if reg_user_password_2.password is True else True
+
+            MDLabel:
+                id: login_error
+                color: 'red'
+                    
+            MDRaisedButton:
+                size_hint: 1, None
+                text: "Register"
+                pos_hint: {"center_x": .5}
+                on_press: root.register_user(reg_user_name,reg_user_password,reg_user_password_2,login_error)
+
+            MDRaisedButton:
+                size_hint: 1, None
+                text: 'Back'
+                pos_hint: {"center_x": .5}
+                on_press:
+                    reg_user_name.text = ''
+                    reg_user_password.text = ''
+                    reg_user_password_2.text = ''
+                    root.manager.current = 'LoginView'
+                    root.manager.transition.direction = 'left'

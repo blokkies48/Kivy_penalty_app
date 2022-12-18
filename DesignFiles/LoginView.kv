@@ -1,0 +1,57 @@
+<LoginView>
+    Screen:
+        MDCard:
+            radius: [20]
+            size_hint: None,None
+            size: 300,400
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            padding: 15
+            spacing: 15
+            orientation: 'vertical'
+            Image:
+                source: 'DesignFiles\\logo.png'
+            MDLabel:
+                text: "LOGIN"
+                halign: "center"
+                font_size: 20
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8}   
+            MDTextField:
+                id: user_name
+                hint_text: "User Name"
+                icon_left: "account"
+                multiline: False
+
+            MDScreen:
+
+                MDTextField:
+                    id: user_password
+                    hint_text: 'Password'
+                    password: True
+                    icon_left: "key-variant"
+                    multiline: False
+
+                MDIconButton:
+                    icon: "eye-off"
+                    pos_hint: {'center_x': 0.9, 'center_y': 1}
+                    on_release:
+                        self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                        user_password.password = False if user_password.password is True else True
+
+            MDLabel:
+                id: login_error
+                color: 'red'
+                    
+            MDRaisedButton:
+                text: "Login"
+                pos_hint: {"center_x": .5}
+                size_hint: 1, None
+                on_press:
+                    root.login(user_name,user_password) 
+            MDRaisedButton:
+                text: "Register"
+                pos_hint: {"center_x": .5}
+                size_hint: 1, None
+                on_press: 
+                    login_error = ''
+                    root.manager.current = 'RegistrationView'
+                    root.manager.transition.direction = 'right'

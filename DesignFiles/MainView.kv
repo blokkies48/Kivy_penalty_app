@@ -1,0 +1,29 @@
+<MainView>
+    BoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            id: hello_bar
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: 15
+                size: self.width, self.height
+                MDLabel:
+                    id: user_name
+                    text: "User Name"
+                MDFlatButton:
+                    text: "Logout"
+
+        MDScreen:
+            MDBottomNavigation:
+                MDBottomNavigationItem:
+                    id: penalties
+                    name: 'Penalties'
+                    text: 'Penalties'
+                    icon: 'format-list-bulleted-square'
+                    on_tab_press:root.current_tab(self)
+
+                    MDRaisedButton:
+                        text: "Add penalty"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+
+
