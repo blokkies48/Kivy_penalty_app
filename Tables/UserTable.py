@@ -23,13 +23,12 @@ class AddUser:
         DB.commit()
 
 class CurrentUser:
-    def get_user(self, username, password):
+    def get_user(self, username):
         CURSOR.execute(f"SELECT * FROM users WHERE username = '{username}'" )
-        user = CURSOR.fetchone()
-        print(user)
+        return CURSOR.fetchone()
 
     
-# test
+# TODO: remove before production
 def allUsers():
     CURSOR.execute("SELECT * FROM users")
     users = CURSOR.fetchall()

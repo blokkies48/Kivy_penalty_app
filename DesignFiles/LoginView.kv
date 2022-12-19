@@ -52,6 +52,6 @@
                 pos_hint: {"center_x": .5}
                 size_hint: 1, None
                 on_press: 
-                    login_error = ''
+                    login_error.text = ''
                     root.manager.current = 'RegistrationView'
                     root.manager.transition.direction = 'right'
