@@ -2,23 +2,29 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 
+import ssl
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+
 error_occurred: bool = False
 
 # TODO: Add Functionality to check if there is a logged in user or not 
-from Views.MainView import MainView
-try:
-    # Views
-    from Views.LoginView import LoginView
-    from Views.RegistrationView import RegistrationView
-except Exception as error:
-    from Views.ErrorView import ErrorView
-    error_occurred = True
-    error_message = error
+
+from mainView import MainView
+
+from loginView import LoginView
+from registrationView import RegistrationView
+
 
 logged_in: bool = False
 
 THEME_ = "Dark"
-THEME_PALETTE = "Red"
+THEME_PALETTE = "Blue"
 
 class MainApp(MDApp):
     def theme_(self):
@@ -27,14 +33,11 @@ class MainApp(MDApp):
 
     def load_design(self):
 
-        self.icon = r"DesignFiles\logo.png"
-        Builder.load_file(r"DesignFiles\MainView.kv")
+        self.icon = "logo.png"
+        Builder.load_file(r"mainView.kv")
 
-        if not error_occurred:
-            Builder.load_file(r"DesignFiles\LoginView.kv")
-            Builder.load_file(r"DesignFiles\RegistrationView.kv")
-        else:
-            Builder.load_file(r"DesignFiles\ErrorView.kv")
+        Builder.load_file(r"loginView.kv")
+        Builder.load_file(r"registrationView.kv")
 
     def build(self):
         # Theme style
@@ -45,28 +48,28 @@ class MainApp(MDApp):
 
         screen_manager = ScreenManager()
 
-        if not error_occurred:
+        if not logged_in:
             # Screens
             screen_manager.add_widget(LoginView(name = "LoginView"))
             screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
+            screen_manager.add_widget(MainView(name = "MainView"))
         else:
-            if not logged_in:
-                screen_manager.add_widget(ErrorView(
-                name = "ErrorView", error_type=error_message))
+            # Screens
+            screen_manager.add_widget(MainView(name = "MainView"))
+            screen_manager.add_widget(LoginView(name = "LoginView"))
+            screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
 
-        screen_manager.add_widget(MainView(name = "MainView"))
         return screen_manager
-
 
 if __name__ == "__main__":
     # Check there is a logged in user
     # TODO: Have to make this more secure and tamper proof
-    with open(r"User_info\LoggedInUser.csv", "r") as f:
-        content: int = 0
-        for _ in f:
-            content += 1
-        if content != 0:
+    # Seems too hacky
+    with open("loggedInUser.txt", "r",encoding='ascii') as f:
+        content: str = ''
+        for line in f:
+            content += line
+        if content != "":
             logged_in = True
-    
     MainApp().run()
 

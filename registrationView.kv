@@ -2,14 +2,14 @@
     Screen:
         MDCard:
             radius: [20]
-            size_hint: None,None
-            size: 300,400
+            size_hint: .9,.7
+            
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             padding: 15
             spacing: 15
             orientation: 'vertical'
             Image:
-                source: 'DesignFiles\\logo.png'
+                source: 'logo.png'
             MDLabel:
                 text: "Register User"
                 halign: "center"
@@ -61,7 +61,8 @@
                 size_hint: 1, None
                 text: "Register"
                 pos_hint: {"center_x": .5}
-                on_press: root.register_user(reg_user_name,reg_user_password,reg_user_password_2,login_error)
+                on_press: 
+                    root.register_user(reg_user_name,reg_user_password,reg_user_password_2,login_error)
 
             MDRaisedButton:
                 size_hint: 1, None

@@ -1,4 +1,5 @@
 <MainView>
+    on_enter: root.on_load()
     BoxLayout:
         orientation: 'vertical'
         MDTopAppBar:
@@ -12,6 +13,7 @@
                     text: "User Name"
                 MDFlatButton:
                     text: "Logout"
+                    on_press: root.logout()
 
         MDScreen:
             MDBottomNavigation:

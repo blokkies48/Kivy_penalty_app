@@ -1,7 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 
-from Tables.UserTable import *
+from userTable import *
 
 class RegistrationView(Screen):
     def register_user(
@@ -83,7 +83,8 @@ class RegistrationView(Screen):
                 self.ids.reg_user_password_2.text = ""
             except Exception as e:
                 print(e)
-            
+                self.ids.login_error.text = "No connection please try again"
+
 
 
     def update_label(self, *args):

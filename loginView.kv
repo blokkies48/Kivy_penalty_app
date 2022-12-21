@@ -2,14 +2,14 @@
     Screen:
         MDCard:
             radius: [20]
-            size_hint: None,None
+            size_hint: .9,.7
             size: 300,400
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             padding: 15
             spacing: 15
             orientation: 'vertical'
             Image:
-                source: 'DesignFiles\\logo.png'
+                source: 'logo.png'
             MDLabel:
                 text: "LOGIN"
                 halign: "center"
@@ -39,7 +39,6 @@
 
             MDLabel:
                 id: login_error
-                color: 'red'
                     
             MDRaisedButton:
                 text: "Login"
