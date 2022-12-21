@@ -13,7 +13,7 @@
             MDLabel:
                 text: "Register User"
                 halign: "center"
-                font_size: 20
+                font_size: 28
                 pos_hint: {'center_x': 0.5, 'center_y': 0.8}   
             MDTextField:
                 id: reg_user_name
@@ -21,7 +21,8 @@
                 icon_left: "account"
                 multiline: False
 
-            MDScreen:
+            BoxLayout:
+                orientation: 'horizontal'
 
                 MDTextField:
                     id: reg_user_password
@@ -32,12 +33,13 @@
 
                 MDIconButton:
                     icon: "eye-off"
-                    pos_hint: {'center_x': 0.9, 'center_y': 1.2}
+                    #pos_hint: {'center_x': 0.9, 'center_y': 1.2}
                     on_release:
                         self.icon = "eye" if self.icon == "eye-off" else "eye-off"
                         reg_user_password.password = False if reg_user_password.password is True else True
 
-            MDScreen:
+            BoxLayout:
+                orientation: 'horizontal'
 
                 MDTextField:
                     id: reg_user_password_2
@@ -48,7 +50,7 @@
 
                 MDIconButton:
                     icon: "eye-off"
-                    pos_hint: {'center_x': 0.9, 'center_y': 1.2}
+                    #pos_hint: {'center_x': 0.9, 'center_y': 1.2}
                     on_release:
                         self.icon = "eye" if self.icon == "eye-off" else "eye-off"
                         reg_user_password_2.password = False if reg_user_password_2.password is True else True

@@ -3,7 +3,6 @@
         MDCard:
             radius: [20]
             size_hint: .9,.7
-            size: 300,400
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             padding: 15
             spacing: 15
@@ -13,7 +12,7 @@
             MDLabel:
                 text: "LOGIN"
                 halign: "center"
-                font_size: 20
+                font_size: 28
                 pos_hint: {'center_x': 0.5, 'center_y': 0.8}   
             MDTextField:
                 id: user_name
@@ -21,7 +20,8 @@
                 icon_left: "account"
                 multiline: False
 
-            MDScreen:
+            BoxLayout:
+                orientation: 'horizontal'
 
                 MDTextField:
                     id: user_password
@@ -32,7 +32,7 @@
 
                 MDIconButton:
                     icon: "eye-off"
-                    pos_hint: {'center_x': 0.9, 'center_y': 1}
+                    #pos_hint: {'center_x': 0.9, 'center_y': 1}
                     on_release:
                         self.icon = "eye" if self.icon == "eye-off" else "eye-off"
                         user_password.password = False if user_password.password is True else True
@@ -54,3 +54,8 @@
                     login_error.text = ''
                     root.manager.current = 'RegistrationView'
                     root.manager.transition.direction = 'right'
+    MDLabel:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+        halign: "center"
+        color: "grey"
+        text: "Contact admin if your forgot your password"

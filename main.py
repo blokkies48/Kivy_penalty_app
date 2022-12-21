@@ -11,15 +11,13 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 
 
-error_occurred: bool = False
-
-# TODO: Add Functionality to check if there is a logged in user or not 
-
 from view_main import MainView
-
 from view_login import LoginView
 from view_registration import RegistrationView
+from view_penalties import PenaltiesView
 
+from back_button_pressed import *
+press_back()
 
 logged_in: bool = False
 
@@ -38,6 +36,7 @@ class MainApp(MDApp):
 
         Builder.load_file(r"kivy_login_view.kv")
         Builder.load_file(r"kivy_registration_view.kv")
+        Builder.load_file(r"kivy_penalties_view.kv")
 
     def build(self):
         # Theme style
@@ -53,11 +52,13 @@ class MainApp(MDApp):
             screen_manager.add_widget(LoginView(name = "LoginView"))
             screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
             screen_manager.add_widget(MainView(name = "MainView"))
+            screen_manager.add_widget(PenaltiesView(name = "PenaltiesView"))
         else:
             # Screens
             screen_manager.add_widget(MainView(name = "MainView"))
             screen_manager.add_widget(LoginView(name = "LoginView"))
             screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
+            screen_manager.add_widget(PenaltiesView(name = "PenaltiesView"))
 
         return screen_manager
 

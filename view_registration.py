@@ -1,5 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
+from kivy.core.window import Window
+Window.softinput_mode = "below_target"
 
 from table_users import *
 

@@ -28,3 +28,7 @@ class MainView(Screen):
 
         self.ids.user_name.text = ("Hi, " 
         + self.user_data[1].capitalize())
+
+    def add_penalty(self):
+        self.manager.current = 'PenaltiesView'
+        self.manager.transition.direction = 'left'

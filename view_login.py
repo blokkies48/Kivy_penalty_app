@@ -3,6 +3,10 @@ from kivy.clock import Clock
 
 from table_users import *
 
+from kivy.core.window import Window
+Window.softinput_mode = "below_target"
+
+
 # TODO: 
 class LoginView(Screen):
     def login(self, username, user_password):
@@ -15,25 +19,31 @@ class LoginView(Screen):
             username: str = username.text
             user_password: str = user_password.text
 
-            user = CurrentUser().get_user(username.lower())
-            # TODO: remove before production
-            print(user)
+            if username != "" and user_password != "":
+                user = CurrentUser().get_user(username.lower())
+                # TODO: remove before production
+                print(user)
+                    
+                if user_password in user:
+                    with open(r"logged_in_user_data.txt", "w",encoding='ascii') as f:
+                        for item in user:
+                            f.write(str(item) + "\n")
+                    self.ids.user_name.text = ''
+                    self.ids.user_password.text = ''
+                    Clock.schedule_once(self.update_label, 5)
+                    self.manager.current = 'MainView'
+                    self.manager.transition.direction = 'left'
+                else:
+                    self.ids.login_error.color = 'red'
+                    self.ids.login_error.text = "Enter a valid password"
+                    self.ids.user_password.text = ''
+                    Clock.schedule_once(self.update_label, 5)
 
-
-            if user_password in user:
-                with open(r"logged_in_user_data.txt", "w",encoding='ascii') as f:
-                    for item in user:
-                        f.write(str(item) + "\n")
-                self.ids.user_name.text = ''
-                self.ids.user_password.text = ''
-                Clock.schedule_once(self.update_label, 5)
-                self.manager.current = 'MainView'
-                self.manager.transition.direction = 'left'
             else:
                 self.ids.login_error.color = 'red'
-                self.ids.login_error.text = "Enter a valid password"
-                self.ids.user_password.text = ''
+                self.ids.login_error.text = "Don't leave the fields empty"
                 Clock.schedule_once(self.update_label, 5)
+
             
         except TypeError as e:
             print(e)
@@ -44,6 +54,7 @@ class LoginView(Screen):
         except Exception as e:
             print(e)
             self.ids.login_error.color = 'red'
+            # TODO: fix error message before production
             self.ids.login_error.text = str(e)
             Clock.schedule_once(self.update_label, 5)
 
