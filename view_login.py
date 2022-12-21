@@ -1,7 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 
-from userTable import *
+from table_users import *
 
 # TODO: 
 class LoginView(Screen):
@@ -21,7 +21,7 @@ class LoginView(Screen):
 
 
             if user_password in user:
-                with open(r"loggedInUser.txt", "w",encoding='ascii') as f:
+                with open(r"logged_in_user_data.txt", "w",encoding='ascii') as f:
                     for item in user:
                         f.write(str(item) + "\n")
                 self.ids.user_name.text = ''

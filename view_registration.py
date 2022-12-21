@@ -1,7 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 
-from userTable import *
+from table_users import *
 
 class RegistrationView(Screen):
     def register_user(

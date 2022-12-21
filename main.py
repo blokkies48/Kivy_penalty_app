@@ -15,10 +15,10 @@ error_occurred: bool = False
 
 # TODO: Add Functionality to check if there is a logged in user or not 
 
-from mainView import MainView
+from view_main import MainView
 
-from loginView import LoginView
-from registrationView import RegistrationView
+from view_login import LoginView
+from view_registration import RegistrationView
 
 
 logged_in: bool = False
@@ -34,10 +34,10 @@ class MainApp(MDApp):
     def load_design(self):
 
         self.icon = "logo.png"
-        Builder.load_file(r"mainView.kv")
+        Builder.load_file(r"kivy_main_view.kv")
 
-        Builder.load_file(r"loginView.kv")
-        Builder.load_file(r"registrationView.kv")
+        Builder.load_file(r"kivy_login_view.kv")
+        Builder.load_file(r"kivy_registration_view.kv")
 
     def build(self):
         # Theme style
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     # Check there is a logged in user
     # TODO: Have to make this more secure and tamper proof
     # Seems too hacky
-    with open("loggedInUser.txt", "r",encoding='ascii') as f:
+    with open("logged_in_user_data.txt", "r",encoding='ascii') as f:
         content: str = ''
         for line in f:
             content += line
