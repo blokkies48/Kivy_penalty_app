@@ -2,7 +2,7 @@ from kivy.uix.screenmanager import Screen
 
 
 
-class MainView(Screen):
+class UserView(Screen):
     # Class variables
     current_tab_name : str = None;
     user_data : list[str] = [];

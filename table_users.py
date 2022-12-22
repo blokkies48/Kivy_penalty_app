@@ -6,24 +6,26 @@ class _UserTable:
         cursor = db.cursor(buffered=True)
         sql_command = """CREATE TABLE IF NOT EXISTS users(
         id INTEGER AUTO_INCREMENT primary key,
-        username VARCHAR(50) ,
-        password VARCHAR(50)
+        username VARCHAR(50),
+        password VARCHAR(50),
+        user_role VARCHAR(50)
         )"""
         cursor.execute(sql_command)
         db.commit()
         cursor.close()
 
 class AddUser:
-    def __init__(self, username, user_password):
+    def __init__(self, username, user_password, user_role):
         self.username = username
         self.user_password = user_password
+        self.user_role = user_role
 
     def add_user(self):
         db = DataBase().connect_to_database()
         cursor = db.cursor(buffered=True)
         _UserTable().create_table()
-        sql_command = "INSERT INTO users (username, password) VALUES (%s, %s)"
-        content = (self.username, self.user_password)
+        sql_command = "INSERT INTO users (username, password, user_role) VALUES (%s, %s, %s)"
+        content = (self.username, self.user_password, self.user_role)
         cursor.execute(sql_command, content)
         db.commit()
         cursor.close()
@@ -39,7 +41,7 @@ class CurrentUser:
 
     
 # TODO: remove before production
-def allUsers():
+def all_users():
     db = DataBase().connect_to_database()
     cursor = db.cursor(buffered=True)
     cursor.execute("SELECT * FROM users")

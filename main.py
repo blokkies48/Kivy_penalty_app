@@ -10,16 +10,16 @@ except AttributeError:
 else:
     ssl._create_default_https_context = _create_unverified_https_context
 
-
-from view_main import MainView
+#View imports
+from view_user import UserView
 from view_login import LoginView
 from view_registration import RegistrationView
 from view_penalties import PenaltiesView
+from view_admin import AdminView
 
+# Handle back button
 from back_button_pressed import *
 press_back()
-
-logged_in: bool = False
 
 THEME_ = "Dark"
 THEME_PALETTE = "Blue"
@@ -32,11 +32,11 @@ class MainApp(MDApp):
     def load_design(self):
 
         self.icon = "logo.png"
-        Builder.load_file(r"kivy_main_view.kv")
-
+        Builder.load_file(r"kivy_user_view.kv")
         Builder.load_file(r"kivy_login_view.kv")
         Builder.load_file(r"kivy_registration_view.kv")
         Builder.load_file(r"kivy_penalties_view.kv")
+        Builder.load_file(r"kivy_admin_view.kv")
 
     def build(self):
         # Theme style
@@ -47,30 +47,15 @@ class MainApp(MDApp):
 
         screen_manager = ScreenManager()
 
-        if not logged_in:
-            # Screens
-            screen_manager.add_widget(LoginView(name = "LoginView"))
-            screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
-            screen_manager.add_widget(MainView(name = "MainView"))
-            screen_manager.add_widget(PenaltiesView(name = "PenaltiesView"))
-        else:
-            # Screens
-            screen_manager.add_widget(MainView(name = "MainView"))
-            screen_manager.add_widget(LoginView(name = "LoginView"))
-            screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
-            screen_manager.add_widget(PenaltiesView(name = "PenaltiesView"))
-
+        screen_manager.add_widget(LoginView(name = "LoginView"))
+        screen_manager.add_widget(AdminView(name = "AdminView"))
+        screen_manager.add_widget(UserView(name = "UserView"))
+        screen_manager.add_widget(PenaltiesView(name = "PenaltiesView"))
+        screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
         return screen_manager
 
+
 if __name__ == "__main__":
-    # Check there is a logged in user
-    # TODO: Have to make this more secure and tamper proof
-    # Seems too hacky
-    with open("logged_in_user_data.txt", "r",encoding='ascii') as f:
-        content: str = ''
-        for line in f:
-            content += line
-        if content != "":
-            logged_in = True
+
     MainApp().run()
 

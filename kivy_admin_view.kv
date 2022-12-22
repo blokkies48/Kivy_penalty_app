@@ -1,0 +1,76 @@
+<AdminView>
+    on_enter: root.on_load()
+    on_leave: root.remove_content()
+    BoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            id: hello_bar
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: 15
+                size: self.width, self.height
+                MDLabel:
+                    id: user_name
+                    text: "User Name"
+                MDFlatButton:
+                    text: "Logout"
+                    on_press: root.logout()
+
+        MDScreen:
+            MDBottomNavigation:
+                MDBottomNavigationItem:
+                    id: penalties
+                    name: 'Penalties'
+                    text: 'Penalties'
+                    icon: 'format-list-bulleted-square'
+                    on_tab_press:root.current_tab(self)
+
+                    MDRaisedButton:
+                        text: "Add penalty"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        on_press: root.add_penalty() 
+
+                MDBottomNavigationItem:
+                    id: reg_user
+                    name: 'Users'
+                    text: 'Users'
+                    icon: 'account'
+                    on_tab_press:root.current_tab(self)
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDLabel:
+                            text: "Users"
+                            font_size: 32
+                            halign: 'center'
+                            size_hint: 1, 0.3  
+                        MDLabel:
+                            size_hint: 1, 0.1
+                            id: error_message
+                            halign: 'center'
+                            font_size: 12
+                            color: 'red' 
+                        MDLabel:
+                            size_hint: 1, 0.1
+                            id: database_error
+                            halign: 'center'
+                            font_size: 12
+                            color: 'red' 
+                        MDFlatButton:
+                            text: "Reload Users"
+                            pos_hint: {'center_x': 0.5}
+                            on_release: root.load_users()
+                        ScrollView:
+                            MDList:
+                                id: all_users_list
+
+
+            MDFloatingActionButton:
+                icon: "plus"
+                elevation: 2
+                pos_hint: {'center_x': 0.9,'center_y': 0.2}
+                text:'Back'
+                on_press: 
+                    root.fab_pressed()
+                    root.manager.transition.direction = 'left'
+
+

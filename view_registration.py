@@ -1,7 +1,13 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
+
+# What was this for again??? 
 from kivy.core.window import Window
 Window.softinput_mode = "below_target"
+#
+# For role selection
+
+#  
 
 from table_users import *
 
@@ -11,24 +17,44 @@ class RegistrationView(Screen):
         user_name,
         user_password,
         user_password_2,
+        user_role,
         login_error):
-
+            self.ids.login_error.color = 'grey'
+            self.ids.login_error.text = "Registering user please wait..."
+            Clock.schedule_once(lambda _: self.register_user_next(
+            user_name,user_password,user_password_2,user_role,login_error), 0.001)
+    user_role: str = "None"
+    def register_user_next(
+        self,
+        user_name,
+        user_password,
+        user_password_2,
+        user_role,
+        login_error):
+        self.ids.login_error.color = 'red'
         # lower case and getting text
         user_name = user_name.text.lower()
         user_password = user_password.text
         user_password_2 = user_password_2.text
+        user_role = user_role.text
 
         # Test cases
         passwords_equals = user_password == user_password_2
         passwords_empty_1 = not user_password
         passwords_empty_2 = not user_password_2
         username_empty = not user_name
+        user_role_incorrect = user_role == "Select role"
+
         
         # Checks if the fields are correct
         if (passwords_equals and not username_empty 
-            and not passwords_empty_1 and not passwords_empty_2):
+            and not passwords_empty_1 and not passwords_empty_2
+            and not user_role_incorrect):
                 # Goes to additional checks
-                self.add_the_user(user_name, user_password)
+                self.add_the_user(user_name, user_password,user_role)
+                # TODO: Remove this before production
+                print(user_name, user_password,user_role)
+
 
         elif (username_empty and passwords_equals 
         and not passwords_empty_1 and not passwords_empty_2):
@@ -44,7 +70,10 @@ class RegistrationView(Screen):
             login_error.text = "Passwords don't match"
             user_password_2 = ""
          
-    def add_the_user(self, user_name, user_password):
+        elif user_role_incorrect:
+            login_error.text = "Please select a user role"
+            Clock.schedule_once(self.update_label, 2) 
+    def add_the_user(self, user_name, user_password,user_role):
         # Check if table exists
         table_exists = True
         try:
@@ -77,16 +106,28 @@ class RegistrationView(Screen):
             Clock.schedule_once(self.update_label, 5)
 
         # If passed all checks then the user can be registered
-        else: 
+        else:
+            failed: bool = False 
             try:
-                AddUser(user_name.lower(), user_password.lower()).add_user()
+                Clock.schedule_once(lambda x : self.add_to_database(
+                user_name.lower(), user_password.lower(), user_role.lower()), .001)
                 self.ids.reg_user_name.text = ""
                 self.ids.reg_user_password.text = ""
                 self.ids.reg_user_password_2.text = ""
+                self.ids.reg_user_role.text = 'Select role'
+                self.ids.login_error.color = 'grey'
+                self.ids.login_error.text = "Registration was successful!"
+                Clock.schedule_once(self.update_label, 5)
+                
             except Exception as e:
                 print(e)
-                self.ids.login_error.text = "No connection please try again"
+                failed = True
+                self.ids.login_error.color = 'red'
+                self.ids.login_error.text = "Error occurred No connection please try again"
+                Clock.schedule_once(self.update_label, 5)
 
+    def add_to_database(self,user_name, user_password, user_role):
+        AddUser(user_name, user_password, user_role).add_user()
 
 
     def update_label(self, *args):
@@ -99,7 +140,48 @@ class RegistrationView(Screen):
     def has_char(self,inputString):
         return any(letter.isalpha() for letter in inputString)
 
+    # Open role selection
 
-            
-        
-     
+    def open_role_selection(self):
+        def close_dialog(obj):
+            dialog.dismiss()
+
+        def select_role(obj):
+            if obj.text == "None":
+                self.ids.reg_user_role.text = "Select role"
+            else:    
+                self.ids.reg_user_role.text = obj.text
+            close_dialog(obj)
+
+
+        dialog = None
+        if not dialog:
+            dialog = MDDialog(
+                title="Select role",
+                type="confirmation",
+                items=[
+                    ItemConfirm(text="Admin", on_release=select_role),
+                    ItemConfirm(text="User", on_release=select_role),
+                    ItemConfirm(text="None", on_release=select_role),
+                ],
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL",
+                        on_release=close_dialog
+                    ),
+                ],
+            )
+        dialog.open()
+
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.list import OneLineAvatarIconListItem
+
+
+class ItemConfirm(OneLineAvatarIconListItem):
+    divider = None
+
+    def set_icon(self, instance_check):
+        pass
+# END SELECT ROLE POPUP
+

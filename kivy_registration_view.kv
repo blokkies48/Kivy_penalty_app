@@ -2,7 +2,7 @@
     Screen:
         MDCard:
             radius: [20]
-            size_hint: .9,.7
+            size_hint: .9,.9
             
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             padding: 15
@@ -14,12 +14,25 @@
                 text: "Register User"
                 halign: "center"
                 font_size: 28
-                pos_hint: {'center_x': 0.5, 'center_y': 0.8}   
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8} 
+                  
+            MDRectangleFlatIconButton:
+                icon: "arrow-down-drop-circle"
+                size_hint: .6, None
+                pos_hint: {'center_x': 0.5,'center_y': 0.5}
+                id: reg_user_role
+                text: "Select role"
+                theme_text_color: "Custom"
+                text_color: "grey"
+                line_color: "grey"
+                on_press: root.open_role_selection()
+
             MDTextField:
                 id: reg_user_name
                 hint_text: "User Name"
                 icon_left: "account"
                 multiline: False
+
 
             BoxLayout:
                 orientation: 'horizontal'
@@ -64,7 +77,7 @@
                 text: "Register"
                 pos_hint: {"center_x": .5}
                 on_press: 
-                    root.register_user(reg_user_name,reg_user_password,reg_user_password_2,login_error)
+                    root.register_user(reg_user_name,reg_user_password,reg_user_password_2,reg_user_role,login_error)
 
             MDRaisedButton:
                 size_hint: 1, None
@@ -74,5 +87,6 @@
                     reg_user_name.text = ''
                     reg_user_password.text = ''
                     reg_user_password_2.text = ''
-                    root.manager.current = 'LoginView'
-                    root.manager.transition.direction = 'left'
+                    reg_user_role.text = 'Select role'
+                    root.manager.current = 'AdminView'
+                    root.manager.transition.direction = 'right'

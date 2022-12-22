@@ -1,4 +1,5 @@
 <LoginView>
+    on_enter: root.on_start()
     Screen:
         MDCard:
             radius: [20]
@@ -46,14 +47,6 @@
                 size_hint: 1, None
                 on_press:
                     root.login(user_name,user_password) 
-            MDRaisedButton:
-                text: "Register"
-                pos_hint: {"center_x": .5}
-                size_hint: 1, None
-                on_press: 
-                    login_error.text = ''
-                    root.manager.current = 'RegistrationView'
-                    root.manager.transition.direction = 'right'
     MDLabel:
         pos_hint: {'center_x': 0.5, 'center_y': 0.1}
         halign: "center"
