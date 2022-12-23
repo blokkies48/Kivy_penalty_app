@@ -36,13 +36,13 @@ class AdminView(Screen):
         self.ids.user_name.text = ("Hi, " 
         + self.user_data[1].capitalize())
 
-        Clock.schedule_once(self.load_users, 3)
+        Clock.schedule_once(self.load_users, 5)
         self.users_loaded = True
 
         def show_loading():
             self.ids.error_message.color = 'grey'
             self.ids.error_message.text = "Loading Users, Please Wait..."
-            Clock.schedule_once(self.update_label, 3)
+            Clock.schedule_once(self.update_label, 5)
 
         show_loading()
 
@@ -88,9 +88,12 @@ class AdminView(Screen):
 
     # Clock.schedule_once(self.background_load, 5)
     def get_users_from_db(self):
+        # Clock.schedule_once(self.background_load_users, 0.001)
+        
         t = Thread(target=self.background_load_users, args=(2, 5))
         t.daemon = True
         t.start()
+
 
     def background_load_users(self, *args):
         try:
@@ -102,3 +105,7 @@ class AdminView(Screen):
         except:
             self.ids.database_error.color = 'red'
             self.ids.database_error.text = "Database error, reload app"
+
+    def add_penalty(self):
+        self.manager.current = 'PenaltiesView'
+        self.manager.transition.direction = 'left'
