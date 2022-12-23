@@ -8,6 +8,7 @@ class PenaltiesView(Screen):
         g_map.lon = 28
         g_map.zoom = 11
         pass
+    
 
 
     

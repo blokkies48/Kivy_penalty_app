@@ -1,4 +1,0 @@
-1
-admin
-1234567a
-admin

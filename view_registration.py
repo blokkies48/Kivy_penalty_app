@@ -46,17 +46,9 @@ class RegistrationView(Screen):
         user_role_incorrect = user_role == "Select role"
 
         
-        # Checks if the fields are correct
-        if (passwords_equals and not username_empty 
-            and not passwords_empty_1 and not passwords_empty_2
-            and not user_role_incorrect):
-                # Goes to additional checks
-                self.add_the_user(user_name, user_password,user_role)
-                # TODO: Remove this before production
-                print(user_name, user_password,user_role)
 
 
-        elif (username_empty and passwords_equals 
+        if (username_empty and passwords_equals 
         and not passwords_empty_1 and not passwords_empty_2):
             login_error.text = "Name field is required"
             Clock.schedule_once(self.update_label, 2) 
@@ -73,8 +65,36 @@ class RegistrationView(Screen):
         elif user_role_incorrect:
             login_error.text = "Please select a user role"
             Clock.schedule_once(self.update_label, 2) 
+
+        # Validation checks
+        # User name length check
+        elif len(user_name) < 5:
+            self.ids.login_error.text = "User name can't be less than 5 characters"
+            Clock.schedule_once(self.update_label, 5)
+
+        # Password length check
+        elif len(user_password) < 8 :
+            self.ids.login_error.text = "Passwords needs to be at least 8 characters"
+            Clock.schedule_once(self.update_label, 5)
+
+        # Make sure password has numbers and characters in it
+        elif not (self.has_numbers(user_password)) or not self.has_char(user_password):
+            self.ids.login_error.text = "Password requires at least one digit and character"
+            Clock.schedule_once(self.update_label, 5)
+
+        # If passed all checks then the user can be registered
+        # Checks if the fields are correct
+        elif (passwords_equals and not username_empty 
+            and not passwords_empty_1 and not passwords_empty_2
+            and not user_role_incorrect):
+                # Goes to additional checks
+                self.add_the_user(user_name, user_password,user_role)
+                # TODO: Remove this before production
+                print(user_name, user_password,user_role)
+        
+
     def add_the_user(self, user_name, user_password,user_role):
-        # Check if table exists
+
         table_exists = True
         try:
             all_user_names()
@@ -88,43 +108,27 @@ class RegistrationView(Screen):
                 self.ids.reg_user_name.text = ""
                 Clock.schedule_once(self.update_label, 5)
                 return None
-
-        # Validation checks
-        # User name length check
-        if len(user_name) < 5:
-            self.ids.login_error.text = "User name can't be less than 5 characters"
-            Clock.schedule_once(self.update_label, 5)
-
-        # Password length check
-        elif len(user_password) < 8 :
-            self.ids.login_error.text = "Passwords needs to be at least 8"
-            Clock.schedule_once(self.update_label, 5)
-
-        # Make sure password has numbers and characters in it
-        elif not (self.has_numbers(user_password)) or not self.has_char(user_password):
-            self.ids.login_error.text = "Password requires at least one digit or character"
-            Clock.schedule_once(self.update_label, 5)
-
-        # If passed all checks then the user can be registered
-        else:
-            failed: bool = False 
-            try:
-                Clock.schedule_once(lambda x : self.add_to_database(
-                user_name.lower(), user_password.lower(), user_role.lower()), .001)
-                self.ids.reg_user_name.text = ""
-                self.ids.reg_user_password.text = ""
-                self.ids.reg_user_password_2.text = ""
-                self.ids.reg_user_role.text = 'Select role'
-                self.ids.login_error.color = 'grey'
-                self.ids.login_error.text = "Registration was successful!"
-                Clock.schedule_once(self.update_label, 5)
-                
-            except Exception as e:
-                print(e)
-                failed = True
-                self.ids.login_error.color = 'red'
-                self.ids.login_error.text = "Error occurred No connection please try again"
-                Clock.schedule_once(self.update_label, 5)
+        
+        failed: bool = False 
+        try:
+            Clock.schedule_once(lambda x : self.add_to_database(
+            user_name.lower(), user_password.lower(), user_role.lower()), .001)
+            self.ids.reg_user_name.text = ""
+            self.ids.reg_user_password.text = ""
+            self.ids.reg_user_password_2.text = ""
+            self.ids.reg_user_role.text = 'Select role'
+            self.ids.login_error.color = 'grey'
+            self.ids.login_error.text = "Registration was successful!"
+            Clock.schedule_once(self.update_label, 8)
+            
+        except Exception as e:
+            print(e)
+            failed = True
+            self.ids.login_error.color = 'red'
+            self.ids.login_error.text = "Error occurred No connection please try again"
+            Clock.schedule_once(self.update_label, 8)
+        # Check if table exists
+       
 
     def add_to_database(self,user_name, user_password, user_role):
         AddUser(user_name, user_password, user_role).add_user()
@@ -184,4 +188,40 @@ class ItemConfirm(OneLineAvatarIconListItem):
     def set_icon(self, instance_check):
         pass
 # END SELECT ROLE POPUP
+
+'''
+Creating an app from scratch using python, kivy, kivymd, mysql, and more for my first client. I used some of my knowledge from my first attempt at my demo app. 
+
+
+
+Some features that I have included so far.
+
+- Connecting to an online hosted database rather than a locally hosted SQL server.
+
+- Multi-threading is used to load users.
+
+- Bunch of password and registration checks.
+
+- Map feature that works with geo location.
+
+- And much more to come.
+
+
+
+I have also done a lot of testing using android devices along side android studio.
+
+I used buildozer and google colab to build the apk. 
+
+
+
+This is the start and the app is still buggy and requires a lot more tweaks and a lot more functionality. 
+
+
+
+Thought I might as well document my progress and see how I improve over time.
+
+
+
+This took me about a few days of work so far, but I have learned a lot and want to thank Madeleine Greyling and SEKURITEIT SONDER GRENSE GAUTENG for the opportunity to do this. 
+'''
 
