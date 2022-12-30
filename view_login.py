@@ -2,7 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 
 from table_users import *
-
+# Pushes text input above virtual keyboard
 from kivy.core.window import Window
 Window.softinput_mode = "below_target"
 
@@ -90,9 +90,10 @@ class LoginView(Screen):
     
     def if_logged_in(self, *args):
         login_info = self.check_login()
+        print(login_info)
         # If logged in and is a admin
         # (if logged in, if admin) how tuple works
-        if login_info[0] and login_info[1]:
+        if (login_info[0] and login_info[1]):
             username = self.content[1]
             user = CurrentUser().get_user(username.lower())
             if "admin" in user and user[2] == self.content[2]:

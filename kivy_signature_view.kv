@@ -1,0 +1,41 @@
+<SignatureView>
+    Label:
+        id: is_signed
+        pos_hint: {'center_x': 0.5,'center_y': .95}
+    Label:
+        text: "Sign Officer"
+        pos_hint: {'center_x': 0.5,'center_y': .9}
+    Label:
+        text: "Sign Supervisor"
+        pos_hint: {'center_x': 0.5,'center_y': 0.5}
+    BoxLayout:
+        orientation:'vertical'
+        size_hint_y: None
+        
+        
+        BoxLayout:
+            padding: 15
+            spacing: 15
+            MDRaisedButton:
+                text: 'Clear'
+                on_press:
+                    _painter_id.canvas.clear()
+                size_hint: 1,None
+
+            MDRaisedButton:
+                text: 'Sign'
+                on_press: 
+                    root._exportImage()
+                    _painter_id.canvas.clear()
+                size_hint: 1,None
+            MDRaisedButton:
+                text: 'Back'
+                on_press: 
+                    root.manager.current = "PenaltiesView"
+                size_hint: 1,None
+            
+        MyPaintWidget:  
+            id: _painter_id
+            size:'300dp','300dp'
+
+

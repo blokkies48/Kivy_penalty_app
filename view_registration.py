@@ -1,11 +1,14 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 
-# What was this for again??? 
+# Pushes text input above virtual keyboard
 from kivy.core.window import Window
 Window.softinput_mode = "below_target"
 #
 # For role selection
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.list import OneLineAvatarIconListItem
 
 #  
 
@@ -95,6 +98,7 @@ class RegistrationView(Screen):
 
     def add_the_user(self, user_name, user_password,user_role):
 
+        # Check if table exists
         table_exists = True
         try:
             all_user_names()
@@ -117,17 +121,16 @@ class RegistrationView(Screen):
             self.ids.reg_user_password.text = ""
             self.ids.reg_user_password_2.text = ""
             self.ids.reg_user_role.text = 'Select role'
-            self.ids.login_error.color = 'grey'
+            self.ids.login_error.color = 'green'
             self.ids.login_error.text = "Registration was successful!"
-            Clock.schedule_once(self.update_label, 8)
+            Clock.schedule_once(self.update_label, 5)
             
         except Exception as e:
             print(e)
             failed = True
             self.ids.login_error.color = 'red'
             self.ids.login_error.text = "Error occurred No connection please try again"
-            Clock.schedule_once(self.update_label, 8)
-        # Check if table exists
+            Clock.schedule_once(self.update_label, 5)
        
 
     def add_to_database(self,user_name, user_password, user_role):
@@ -144,8 +147,10 @@ class RegistrationView(Screen):
     def has_char(self,inputString):
         return any(letter.isalpha() for letter in inputString)
 
-    # Open role selection
+    
 
+
+    # Open role selection
     def open_role_selection(self):
         def close_dialog(obj):
             dialog.dismiss()
@@ -164,9 +169,9 @@ class RegistrationView(Screen):
                 title="Select role",
                 type="confirmation",
                 items=[
-                    ItemConfirm(text="Admin", on_release=select_role),
-                    ItemConfirm(text="User", on_release=select_role),
-                    ItemConfirm(text="None", on_release=select_role),
+                    OneLineAvatarIconListItem(text="Admin", on_release=select_role),
+                    OneLineAvatarIconListItem(text="User", on_release=select_role),
+                    OneLineAvatarIconListItem(text="None", on_release=select_role),
                 ],
                 buttons=[
                     MDFlatButton(
@@ -177,51 +182,6 @@ class RegistrationView(Screen):
             )
         dialog.open()
 
-from kivymd.uix.button import MDFlatButton
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.list import OneLineAvatarIconListItem
 
-
-class ItemConfirm(OneLineAvatarIconListItem):
-    divider = None
-
-    def set_icon(self, instance_check):
-        pass
 # END SELECT ROLE POPUP
-
-'''
-Creating an app from scratch using python, kivy, kivymd, mysql, and more for my first client. I used some of my knowledge from my first attempt at my demo app. 
-
-
-
-Some features that I have included so far.
-
-- Connecting to an online hosted database rather than a locally hosted SQL server.
-
-- Multi-threading is used to load users.
-
-- Bunch of password and registration checks.
-
-- Map feature that works with geo location.
-
-- And much more to come.
-
-
-
-I have also done a lot of testing using android devices along side android studio.
-
-I used buildozer and google colab to build the apk. 
-
-
-
-This is the start and the app is still buggy and requires a lot more tweaks and a lot more functionality. 
-
-
-
-Thought I might as well document my progress and see how I improve over time.
-
-
-
-This took me about a few days of work so far, but I have learned a lot and want to thank Madeleine Greyling and SEKURITEIT SONDER GRENSE GAUTENG for the opportunity to do this. 
-'''
 

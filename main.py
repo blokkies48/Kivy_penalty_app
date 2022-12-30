@@ -16,6 +16,7 @@ from view_login import LoginView
 from view_registration import RegistrationView
 from view_penalties import PenaltiesView
 from view_admin import AdminView
+from view_signatures import SignatureView
 
 # Handle back button
 from back_button_pressed import *
@@ -37,6 +38,7 @@ class MainApp(MDApp):
         Builder.load_file(r"kivy_registration_view.kv")
         Builder.load_file(r"kivy_penalties_view.kv")
         Builder.load_file(r"kivy_admin_view.kv")
+        Builder.load_file(r"kivy_signature_view.kv")
 
     def build(self):
         # Theme style
@@ -52,6 +54,7 @@ class MainApp(MDApp):
         screen_manager.add_widget(UserView(name = "UserView"))
         screen_manager.add_widget(PenaltiesView(name = "PenaltiesView"))
         screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
+        screen_manager.add_widget(SignatureView(name = "SignatureView"))
         return screen_manager
 
 

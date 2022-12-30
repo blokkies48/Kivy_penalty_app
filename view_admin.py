@@ -56,7 +56,8 @@ class AdminView(Screen):
                     for user in f:
                         name = user.split(" ")
                         widget = OneLineListItem(
-                            text = f"ID: {name[0]}, Name: {name[1].capitalize()}, Role: {name[3].capitalize()}"
+                            text = f"ID: {name[0]}, Name: {name[1].capitalize()}, Role: {name[3].capitalize()}",
+                            on_release = self.select_user
                         )
                         self.ids.all_users_list.add_widget(widget)    
             except:
@@ -67,6 +68,10 @@ class AdminView(Screen):
             self.ids.error_message.color = 'red'
             self.ids.error_message.text = "Error reload"
             Clock.schedule_once(self.update_label, 5)
+
+    # TODO: When user is selected       
+    def select_user(self, list_item):
+        print(list_item.text)
 
     def update_label(self, *args):
         self.ids.error_message.text = ''
