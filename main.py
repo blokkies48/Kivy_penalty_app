@@ -19,6 +19,7 @@ from view_penalties import PenaltiesView
 from view_admin import AdminView
 from view_signatures import SignatureView
 
+
 # Handle back button
 from back_button_pressed import *
 press_back()

@@ -29,10 +29,14 @@
                             id: marker
                             source: "map_pin.png"
 
-                MDTextField:
+                MDRectangleFlatButton:
                     id: officer_on_duty
-                    hint_text: "Officer's name"
-                    multiline: False
+                    text: "Officer's name"
+                    size_hint: 1, None  
+                    text_color: 'grey'
+                    line_color: 'grey'
+                    on_press:
+                        root.select_officer()
                 MDTextField:
                     id: penalty
                     hint_text: "Penalty"
@@ -61,7 +65,7 @@
                     size_hint: 1,None
                     padding: 20
                     spacing: 20
-                    MDRaisedButton:
+                    MDRectangleFlatButton:
                         text: "SIGN"
                         on_press: root.sign()
                     Label:

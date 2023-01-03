@@ -10,6 +10,8 @@ Window.softinput_mode = "below_target"
 from kivy.uix.screenmanager import NoTransition, SlideTransition
 
 
+from table_guards import all_guard_pers
+
 
 # TODO: 
 class LoginView(Screen):
@@ -31,12 +33,19 @@ class LoginView(Screen):
                 print(user)
                     
                 if user_password in user:
+                    # User details
+                    # TODO: Add user time stamp here
                     with open(r"logged_in_user_data.txt", "w",encoding='ascii') as f:
                         for item in user:
                             f.write(str(item) + "\n")
                     self.ids.user_name.text = ''
                     self.ids.user_password.text = ''
                     Clock.schedule_once(self.update_label, 5)
+                    # Get pers_no 
+                    with open("pers_no.txt" , "w", encoding="ascii") as f:
+                        for number in all_guard_pers():
+                            f.write(str(number) + "\n")
+                    # Determines user or admin 
                     if user[-1] == 'admin':
                         print((user[-1]) + "Logged in admin")
                         self.manager.current = 'AdminView'
@@ -88,6 +97,7 @@ class LoginView(Screen):
     def on_start(self):
         Clock.schedule_once(self.if_logged_in, .00001)
     
+    # TODO: Add logic to check time stamp
     def if_logged_in(self, *args):
         login_info = self.check_login()
         print(login_info)

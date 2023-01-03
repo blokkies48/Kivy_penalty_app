@@ -57,6 +57,9 @@ class PenaltiesView(Screen):
     def sign(self):
         self.manager.current = "SignatureView"
 
+    #def select_officer(self):
+
+
 
 
      
