@@ -20,24 +20,25 @@
                 text: 'Clear'
                 on_press:
                     _painter_id.canvas.clear()
+                    is_signed.text = "Not Signed"
+                    root.clear_pressed()
                 size_hint: 1,None
 
             MDRaisedButton:
-                text: 'Sign'
+                text: 'Done'
+                id: done
                 on_press: 
                     root._exportImage()
-                    _painter_id.canvas.clear()
+                    root.manager.current = "PenaltiesView"
+                    is_signed.text = "Signed"
                 size_hint: 1,None
             MDRaisedButton:
                 text: 'Back'
                 on_press: 
                     root.manager.current = "PenaltiesView"
-                    is_signed.text = "Not Signed"
-                    _painter_id.canvas.clear()
                 size_hint: 1,None
             
         MyPaintWidget:  
             id: _painter_id
             size:'300dp','300dp'
-
 

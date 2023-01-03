@@ -63,4 +63,4 @@ def all_guard_pers():
     cursor.execute("SELECT * FROM guards")
     guards = cursor.fetchall()
     cursor.close()
-    return [pers_no[0] for pers_no in guards]
+    return [(pers_no[0], pers_no[1]) for pers_no in guards]

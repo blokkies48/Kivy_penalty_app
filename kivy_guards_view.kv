@@ -1,0 +1,29 @@
+<GuardsView>
+    BoxLayout:
+        padding: 20
+        spacing: 20
+        orientation: "vertical"
+        BoxLayout:
+            padding: 20
+            spacing: 20
+            orientation: "horizontal"
+            size_hint_y: 0.2
+            MDTextField:
+                id: keyword
+                hint_text: "search"
+                multiline: False
+
+            MDRectangleFlatButton:
+                text: "Search"
+                on_press:
+                    root.search(keyword.text)
+        ScrollView:
+            MDList:
+                id: list_of_guards
+        MDRaisedButton:
+            text: "Back"
+            size_hint: 1, None
+            on_press: root.back()
+                
+
+
