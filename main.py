@@ -3,6 +3,7 @@ from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 
 import ssl
+import os
 try:
     _create_unverified_https_context = ssl._create_unverified_context
 except AttributeError:
@@ -56,6 +57,10 @@ class MainApp(MDApp):
         screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
         screen_manager.add_widget(SignatureView(name = "SignatureView"))
         return screen_manager
+
+    def stop(self, *args):
+        if os.path.isfile('signatures.png'):
+            os.remove("signatures.png")
 
 
 if __name__ == "__main__":

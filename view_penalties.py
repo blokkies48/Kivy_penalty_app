@@ -31,9 +31,10 @@ class PenaltiesView(Screen):
         g_map.lon = lon
         g_map.zoom = 15
         # Auto filled in fields
-        self.ids.supervisor.text = f"Report done by: {self.content[1]}"
+        self.ids.supervisor.text = f"Report done by: {self.content[1].capitalize()}"
         self.ids.date.text = f"On: {date.today()}"
         self.ids.time.text = f"At: {datetime.now().strftime('%H:%M:%S')}"
+        # TODO:
         # Load images
         if os.path.isfile('signatures.png'):
             self.ids.signed.text = "Signed"

@@ -7,13 +7,11 @@ import os
 # Code from https://groups.google.com/g/kivy-users/c/ib2NUFOnHeQ
 class SignatureView(Screen):
     def is_signed(self):
-        if os.path.isfile('signatures.png'):
-            self.ids.is_signed.text = "Signed"
-        else:
-            self.ids.is_signed.text = "Not signed"
+        self.ids.is_signed.text = "Signed"
+        
 
     def on_pre_enter(self, *args):
-        self.is_signed()
+        self.ids.is_signed.text = "Not Signed"
 
     def _exportImage(self):
         dirname = r""
@@ -23,7 +21,6 @@ class SignatureView(Screen):
         self.export_to_png(filename)
         self.is_signed()
     class MyPaintWidget(Widget):
-    
         def on_touch_down(self, touch):
             color = (1,1,1)
             with self.canvas:
