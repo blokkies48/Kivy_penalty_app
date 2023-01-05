@@ -6,10 +6,14 @@ import re
 
 class GuardsView(Screen):
     search_results = []
-
-            
+    # Add wherever changing screen
+    def back(self):
+        self.ids.list_of_guards.clear_widgets()
+        self.manager.current = "PenaltiesView"
+        self.manager.transition.direction = 'right'
     def search(self, keyword):
         self.ids.list_of_guards.clear_widgets()
+
         with open("pers_no.txt", "r") as f:
             for line in f:
                 if keyword in line:
@@ -34,9 +38,12 @@ class GuardsView(Screen):
         self.ids.keyword.text = ''
 
     def select_item(self, obj):
-        print(obj.text)
+        with open("officer_selected.txt", "w") as f:
+            f.write("Officer: " + obj.text + "\n")
+        self.back()
 
-    def back(self):
-        self.ids.list_of_guards.clear_widgets()
-        self.manager.current = "PenaltiesView"
+    def clear(self):
+        with open("officer_selected.txt", "w") as f:
+            f.write("")
+        self.back()
         

@@ -6,9 +6,6 @@ Window.softinput_mode = "below_target"
 
 
 from datetime import date, datetime
-from kivymd.uix.button import MDFlatButton
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.list import OneLineAvatarIconListItem
 
 import os
 import geocoder
@@ -18,6 +15,17 @@ class PenaltiesView(Screen):
     officer_pers_nos = []
 
     def load_content(self):
+        with open("officer_selected.txt", "r") as f:
+            for line in f:
+                
+                if "Officer:" in line:
+                    new_line = line.strip("Officer: ")
+                    print(len(new_line), new_line)
+                    self.ids.officer_on_duty.text = str(new_line.strip("\n"))
+                    break
+            else:
+                print("Here")
+                self.ids.officer_on_duty.text = "Officer's Pers No"
         
         with open("logged_in_user_data.txt", "r") as f:
             for line in f:
@@ -56,23 +64,19 @@ class PenaltiesView(Screen):
         self.content = []
         if os.path.isfile('signatures.png'):
             os.remove("signatures.png")
+        with open("officer_selected.txt", "w") as f:
+            f.write("")
 
     def sign(self):
         self.manager.current = "SignatureView"
 
+
     def select_officer(self):
         
         self.manager.current = "GuardsView"
+        self.manager.transition.direction = 'left'
 
 
-class ItemConfirm(OneLineAvatarIconListItem):
-    divider = None
-    def set_icon(self, instance_check):
-        instance_check.active = True
-        check_list = instance_check.get_widgets(instance_check.group)
-        for check in check_list:
-            if check != instance_check:
-                check.active = False
 
      
 
