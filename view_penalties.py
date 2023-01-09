@@ -69,6 +69,7 @@ class PenaltiesView(Screen):
 
     def sign(self):
         self.manager.current = "SignatureView"
+        self.manager.transition.direction = 'left'
 
 
     def select_officer(self):

@@ -11,6 +11,7 @@ from kivy.uix.screenmanager import NoTransition, SlideTransition
 
 
 from table_guards import all_guard_pers
+from table_penalties_list import get_penalties
 
 
 # TODO: 
@@ -44,6 +45,9 @@ class LoginView(Screen):
                     # Get pers_no 
                     with open("pers_no.txt" , "w", encoding="ascii") as f:
                         for number in all_guard_pers():
+                            f.write(str(number) + "\n")
+                    with open("penalties_list.txt" , "w", encoding="ascii") as f:
+                        for number in get_penalties():
                             f.write(str(number) + "\n")
                     # Determines user or admin 
                     if user[-1] == 'admin':

@@ -30,3 +30,11 @@ class AddPenalty:
         cursor.execute(sql_command, content)
         db.commit()
         cursor.close()
+
+def get_penalties():
+    db = DataBase().connect_to_database()
+    cursor = db.cursor(buffered=True)
+    cursor.execute("SELECT * FROM penalties_list")
+    penalties_list = cursor.fetchall()
+    cursor.close()
+    return [(penalties[0], penalties[1]) for penalties in penalties_list]
