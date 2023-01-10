@@ -19,7 +19,7 @@ from view_penalties import PenaltiesView
 from view_admin import AdminView
 from view_signatures import SignatureView
 from view_guards import GuardsView
-
+from view_penalties_list import PenaltiesListView
 
 # Handle back button
 from back_button_pressed import *
@@ -43,6 +43,7 @@ class MainApp(MDApp):
         Builder.load_file(r"kivy_admin_view.kv")
         Builder.load_file(r"kivy_signature_view.kv")
         Builder.load_file(r"kivy_guards_view.kv")
+        Builder.load_file(r"kivy_penalties_list_view.kv")
 
     def build(self):
         # Theme style
@@ -60,11 +61,17 @@ class MainApp(MDApp):
         screen_manager.add_widget(RegistrationView(name = "RegistrationView"))
         screen_manager.add_widget(SignatureView(name = "SignatureView"))
         screen_manager.add_widget(GuardsView(name = "GuardsView"))
+        screen_manager.add_widget(PenaltiesListView(name = "PenaltiesListView"))
         return screen_manager
 
     def stop(self, *args):
         if os.path.isfile('signatures.png'):
             os.remove("signatures.png")
+
+        with open("officer_selected.txt", "w") as f:
+            f.write("")
+        with open("penalties_selected.txt", "w") as f:
+            f.write("")
 
 
 if __name__ == "__main__":

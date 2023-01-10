@@ -37,10 +37,14 @@
                     line_color: 'grey'
                     on_press:
                         root.select_officer()
-                MDTextField:
-                    id: penalty
-                    hint_text: "Penalty"
-                    multiline: False
+                MDRectangleFlatButton:
+                    id: penalty_selected
+                    text: "Select Penalty"
+                    size_hint: 1, 1  
+                    text_color: 'grey'
+                    line_color: 'grey'
+                    on_press:
+                        root.select_penalty()
                 MDTextField:
                     id: site
                     hint_text: "Site's name"
@@ -69,8 +73,7 @@
                         text: "SIGN"
                         on_press: root.sign()
                     Label:
-                        id: signed
-                
+                        id: signed               
         
         GridLayout:
             cols: 2
@@ -86,7 +89,6 @@
             MDRaisedButton:
                 size_hint: 1, None
                 text: 'Save'
-
                 on_press:
                     root.back()           
                     

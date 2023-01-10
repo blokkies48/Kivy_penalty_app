@@ -42,13 +42,6 @@ class LoginView(Screen):
                     self.ids.user_name.text = ''
                     self.ids.user_password.text = ''
                     Clock.schedule_once(self.update_label, 5)
-                    # Get pers_no 
-                    with open("pers_no.txt" , "w", encoding="ascii") as f:
-                        for number in all_guard_pers():
-                            f.write(str(number) + "\n")
-                    with open("penalties_list.txt" , "w", encoding="ascii") as f:
-                        for number in get_penalties():
-                            f.write(str(number) + "\n")
                     # Determines user or admin 
                     if user[-1] == 'admin':
                         print((user[-1]) + "Logged in admin")
@@ -57,12 +50,20 @@ class LoginView(Screen):
                     else:
                         self.manager.current = 'UserView'
                         self.manager.transition.direction = 'left'
+                    # Get pers_no and penalties
+                    with open("pers_no.txt" , "w", encoding="ascii") as f:
+                        for number in all_guard_pers():
+                            f.write(str(number) + "\n")
+                    with open("penalties_list.txt" , "w", encoding="ascii") as f:
+                        for number in get_penalties():
+                            f.write(str(number) + "\n")
+
                 else:
                     self.ids.login_error.color = 'red'
                     self.ids.login_error.text = "Enter a valid password"
                     self.ids.user_password.text = ''
                     Clock.schedule_once(self.update_label, 5)
-
+               
             else:
                 self.ids.login_error.color = 'red'
                 self.ids.login_error.text = "Don't leave the fields empty"

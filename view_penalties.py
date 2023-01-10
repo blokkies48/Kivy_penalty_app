@@ -3,8 +3,6 @@ from kivy.uix.screenmanager import Screen
 from kivy.core.window import Window
 Window.softinput_mode = "below_target"
 #
-
-
 from datetime import date, datetime
 
 import os
@@ -26,6 +24,17 @@ class PenaltiesView(Screen):
             else:
                 print("Here")
                 self.ids.officer_on_duty.text = "Officer's Pers No"
+
+        with open("penalties_selected.txt", "r") as f:
+            for line in f:
+                
+                if "Penalty:" in line:
+                    new_line = line.strip("Penalty: ")
+                    print(len(new_line), new_line)
+                    self.ids.penalty_selected.text = str(new_line.strip("\n"))
+                    break
+            else:
+                self.ids.penalty_selected.text = "Select Penalty"
         
         with open("logged_in_user_data.txt", "r") as f:
             for line in f:
@@ -66,6 +75,9 @@ class PenaltiesView(Screen):
             os.remove("signatures.png")
         with open("officer_selected.txt", "w") as f:
             f.write("")
+        with open("penalties_selected.txt", "w") as f:
+            f.write("")
+        
 
     def sign(self):
         self.manager.current = "SignatureView"
@@ -73,8 +85,11 @@ class PenaltiesView(Screen):
 
 
     def select_officer(self):
-        
         self.manager.current = "GuardsView"
+        self.manager.transition.direction = 'left'
+        
+    def select_penalty(self):
+        self.manager.current = "PenaltiesListView"
         self.manager.transition.direction = 'left'
 
 
