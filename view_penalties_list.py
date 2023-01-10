@@ -6,6 +6,15 @@ import re
 
 class PenaltiesListView(Screen):
     search_results = []
+    def load(self):
+        with open("penalties_list.txt", "r") as f:
+            for line in f:
+                widget = OneLineListItem(
+                    text = line,
+                    on_release=self.select_item
+                )
+                self.ids.list_of_penalties.add_widget(widget)
+
     # Add wherever changing screen
     def back(self):
         self.ids.list_of_penalties.clear_widgets()
@@ -19,11 +28,11 @@ class PenaltiesListView(Screen):
         with open("penalties_list.txt", "r") as f:
             for line in f:
                 if keyword in line:
-                    cleaned_line_1 = re.findall('[a-zA-Z]', line)
-                    cleaned_line_2 = re.findall('[0-9]', line)
-                    self.search_results.append("".join(cleaned_line_1) + " " + "".join(cleaned_line_2))
+                    #cleaned_line_1 = re.findall('[a-zA-Z]', line)
+                    #cleaned_line_2 = re.findall('[0-9]', line)
+                    self.search_results.append("".join(line))
 
-        if len(self.search_results) != 0 and keyword != "":
+        if len(self.search_results) != 0:
             for item in self.search_results:
                 widget = OneLineListItem(
                     text = item,
