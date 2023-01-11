@@ -29,9 +29,9 @@ class PenaltiesView(Screen):
             for line in f:
                 
                 if "Penalty:" in line:
-                    new_line = line.strip("Penalty: ")
-                    print(len(new_line), new_line)
-                    self.ids.penalty_selected.text = str(new_line.strip("\n"))
+                    new_line = line.strip("Penalty: ").split(",")
+                    
+                    self.ids.penalty_selected.text = new_line[0]
                     break
             else:
                 self.ids.penalty_selected.text = "Select Penalty"

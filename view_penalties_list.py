@@ -9,8 +9,9 @@ class PenaltiesListView(Screen):
     def load(self):
         with open("penalties_list.txt", "r") as f:
             for line in f:
+                filtered_line = re.findall('[a-zA-Z, ]', line)
                 widget = OneLineListItem(
-                    text = line,
+                    text = "".join(filtered_line),
                     on_release=self.select_item
                 )
                 self.ids.list_of_penalties.add_widget(widget)
