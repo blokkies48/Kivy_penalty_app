@@ -8,6 +8,8 @@ from datetime import date, datetime
 import os
 import geocoder
 
+from view_signatures import SignatureView
+
 class PenaltiesView(Screen):
     content = []
     officer_pers_nos = []
@@ -77,7 +79,8 @@ class PenaltiesView(Screen):
             f.write("")
         with open("penalties_selected.txt", "w") as f:
             f.write("")
-        
+
+        SignatureView().ids._painter_id.canvas.clear()
 
     def sign(self):
         self.manager.current = "SignatureView"

@@ -2,6 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivymd.uix.list import OneLineListItem
 from kivy.uix.label import Label
 
+
 import re
 
 class PenaltiesListView(Screen):
@@ -21,6 +22,7 @@ class PenaltiesListView(Screen):
         self.ids.list_of_penalties.clear_widgets()
         self.manager.current = "PenaltiesView"
         self.manager.transition.direction = 'right'
+
 
     # TODO: Change this out.
     def search(self, keyword):

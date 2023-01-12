@@ -12,7 +12,6 @@
         orientation:'vertical'
         size_hint_y: None
         
-        
         BoxLayout:
             padding: 15
             spacing: 15
@@ -31,12 +30,14 @@
                     root._exportImage()
                     root.manager.current = "PenaltiesView"
                     is_signed.text = "Signed"
+                    _painter_id.canvas.clear()
                 size_hint: 1,None
             MDRaisedButton:
                 text: 'Back'
                 on_press: 
                     root.manager.current = "PenaltiesView"
                     root.manager.transition.direction = 'right'
+                    _painter_id.canvas.clear()
 
                 size_hint: 1,None
             
