@@ -30,14 +30,13 @@
                     root._exportImage()
                     root.manager.current = "PenaltiesView"
                     is_signed.text = "Signed"
-                    _painter_id.canvas.clear()
+
                 size_hint: 1,None
             MDRaisedButton:
                 text: 'Back'
                 on_press: 
                     root.manager.current = "PenaltiesView"
                     root.manager.transition.direction = 'right'
-                    _painter_id.canvas.clear()
 
                 size_hint: 1,None
             

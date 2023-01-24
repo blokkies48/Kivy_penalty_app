@@ -40,23 +40,5 @@ class CurrentUser:
         return user
 
     
-# TODO: remove before production
-def all_users():
-    db = DataBase().connect_to_database()
-    cursor = db.cursor(buffered=True)
-    cursor.execute("SELECT * FROM users")
-    users = cursor.fetchall()
-    print(users)
-    cursor.close()
-    return users
 
-# test
-def all_user_names():
-    db = DataBase().connect_to_database()
-    cursor = db.cursor(buffered=True)
-    cursor.execute("SELECT * FROM users")
-    users = cursor.fetchall()
-    print(users)
-    cursor.close()
-    return [name[1] for name in users]
 

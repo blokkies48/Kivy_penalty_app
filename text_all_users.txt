@@ -1,4 +1,0 @@
-1 admin 1234567a admin 
-13 jonathan 1234567a user 
-19 user_1 1234567a user 
-20 user_2 12345678a user 

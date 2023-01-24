@@ -30,13 +30,13 @@ class LoginView(Screen):
 
             if username != "" and user_password != "":
                 user = CurrentUser().get_user(username.lower())
-                # TODO: remove before production
-                print(user)
+
+
                     
                 if user_password in user:
                     # User details
                     # TODO: Add user time stamp here
-                    with open(r"logged_in_user_data.txt", "w",encoding='ascii') as f:
+                    with open("logged_in_user_data.txt", "w",encoding='ascii') as f:
                         for item in user:
                             f.write(str(item) + "\n")
                     self.ids.user_name.text = ''
@@ -44,7 +44,6 @@ class LoginView(Screen):
                     Clock.schedule_once(self.update_label, 5)
                     # Determines user or admin 
                     if user[-1] == 'admin':
-                        print((user[-1]) + "Logged in admin")
                         self.manager.current = 'AdminView'
                         self.manager.transition.direction = 'left'
                     else:
@@ -105,16 +104,12 @@ class LoginView(Screen):
     # TODO: Add logic to check time stamp
     def if_logged_in(self, *args):
         login_info = self.check_login()
-        print(login_info)
         # If logged in and is a admin
         # (if logged in, if admin) how tuple works
         if (login_info[0] and login_info[1]):
-            username = self.content[1]
-            user = CurrentUser().get_user(username.lower())
-            if "admin" in user and user[2] == self.content[2]:
-                self.manager.transition = NoTransition()
-                self.manager.current = 'AdminView'
-                self.manager.transition = SlideTransition()
+            self.manager.transition = NoTransition()
+            self.manager.current = 'AdminView'
+            self.manager.transition = SlideTransition()
         elif login_info[0]:
             self.manager.transition = NoTransition()
             self.manager.current = 'UserView'
