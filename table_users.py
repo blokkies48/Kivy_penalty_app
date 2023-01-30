@@ -39,6 +39,15 @@ class CurrentUser:
         cursor.close()
         return user
 
+
+def all_users() -> list[str]:
+    db = DataBase().connect_to_database()
+    cursor = db.cursor(buffered=True)
+    cursor.execute(f"SELECT * FROM users" )
+    user = cursor.fetchall()
+    cursor.close()
+    return user
+
     
 
 
