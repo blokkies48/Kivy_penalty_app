@@ -48,6 +48,14 @@ def all_users() -> list[str]:
     cursor.close()
     return user
 
+def all_user_names():
+    db = DataBase().connect_to_database()
+    cursor = db.cursor(buffered=True)
+    cursor.execute("SELECT * FROM users")
+    users = cursor.fetchall()
+    print(users)
+    cursor.close()
+    return [name[1] for name in users]
     
 
 
